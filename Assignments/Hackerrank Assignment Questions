@@ -1,0 +1,451 @@
+# You are given two arrays  and . Both have dimensions of X. Your task is to compute their matrix product.
+
+import numpy as np
+
+N = int(input())
+A = list([input().split() for i in range(N)])
+B = list([input().split() for i in range(N)])
+array_1 = [int(i) for j in A for i in j]
+array_2 = [int(i) for j in B for i in j]
+dot_product = np.dot(np.array(array_1).reshape(N,N),np.array(array_2).reshape(N,N))
+print(dot_product)
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+# You are given two integer arrays of size X and X ( &  are rows, and  is the column). Your task is to concatenate the arrays along axis .
+
+import numpy as np
+
+N,M,P = [int(i) for i in input().split(' ')]
+A = list([input().split() for i in range(N)])
+B = list([input().split() for i in range(M)])
+array_1 = [int(i) for j in A for i in j]
+array_2 = [int(i) for j in B for i in j]
+
+concatenated = np.concatenate((np.array(array_1).reshape(N,P),np.array(array_2).reshape(M,P)), axis=0)
+print(concatenated)
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+# Given n: the number of integers that need to be input, we need to input the integers and print the sum of these "n" integers.
+
+n=int(input())
+if n==0: 
+    print(0)
+else:
+    summ=0
+    numbers=input()
+    number_list=numbers.split()
+    for i in number_list:
+        summ += int(i)
+    print(summ)
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+# Given a list of integers as input, return the second largest number. Print "Error" in case of any errors like there exists no second largest element.
+
+n=input()
+n_list=[int(i) for i in n.split(",")]
+n_list_set=set(n_list)
+final=list(n_list_set)
+sorted_final=sorted(final,reverse=True)
+if len(set(sorted_final))==1:
+    print('Error')
+else:
+    print(sorted_final[1])
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#Write a program that prints the numbers from 1 to n. For multiples of ‘3’ print “Fizz” instead of the number and 
+#for the multiples of ‘5’ print “Buzz” instead of the the number itself. If a number is a multiple of 3 and 5 both, print "FizzBuzz".
+
+n=int(input())
+separator=','
+for i in range(1,n+1):
+    if i==n:
+        separator="\n"
+    if i%3==0 and i%5==0:
+        print('FizzBuzz', end=separator)
+        continue
+    elif i%3==0:
+        print('Fizz',end=separator)
+        continue
+    elif i%5==0:
+        print('Buzz', end=separator)
+        continue
+    else:
+        print(i, end=separator)
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#You are climbing a staircase. It takes "n" steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+def countStairs(n):
+    if n==1:
+        return 1 # boundary case, there is only one way to climb one step
+    if n==2:
+        return 2 # boundary case, two ways to climb 2 steps: 1+1 and 2
+
+    return countStairs(n-1)+countStairs(n-2) # recursive case: climb one step or two steps
+
+n=int(input())
+print(countStairs(n))
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#A peak element is an element that is strictly greater than its neighbors.
+#Given an integer array "a", find a peak element, and return its index. If the array contains multiple peaks, return the index to any of the peaks.
+#You may imagine that a[-1] = a[n] = -∞. Design a O(lg(n)) time & O(1) space algorithm.
+
+s = input().split(",")
+a = [int(i) for i in s]
+
+l=0 # left pointer
+r=len(a)-1 # right pointer
+
+# binary search like code
+while(l<r):
+    mid = (l+r)//2
+    if a[mid] > a[mid+1]:
+        r = mid
+    else:
+        l = mid + 1
+
+print(l)
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#Given an array A of integers, return the length of the longest arithmetic subsequence in A.
+#Recall that a subsequence of A is a list A[i_1], A[i_2], ..., A[i_k] with 0 <= i_1 < i_2 < ... < i_k <= A.length - 1, 
+#and that a sequence B is arithmetic if B[i+1] - B[i] are all the same value (for 0 <= i < B.length - 1).
+
+def longestArithSeqLength(A):
+    dp = {}
+    for i in range(len(A)):
+        for j in range(i + 1, len(A)):
+            dp[j, A[j] - A[i]] = dp.get((i, A[j] - A[i]), 1) + 1
+    return max(dp.values())
+
+
+s = input().split(",")
+a = [int(i) for i in s]
+
+print(longestArithSeqLength(a))
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#The shape tool gives a tuple of array dimensions and can be used to change the dimensions of an array.
+
+import numpy
+n=input()
+n_list=[int(i) for i in n.split(' ')]
+n=3
+final = [n_list[i * n:(i + 1) * n] for i in range((len(n_list) + n - 1) // n )] 
+my_array= numpy.array([final])
+print(numpy.reshape(my_array,(3,3)))
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#You are given a 2-D array with dimensions X. Your task is to perform the min function over axis  and then find the max of that.
+
+n=str(input())
+n,m=[int(i) for i in n.split(' ')]
+max_values=[]
+i=1
+while i<=n:
+    ab=str(input())
+    a,b=[int(i) for i in ab.split(' ')]
+    if a<=b:
+        max_values.append(a)
+    else:
+        max_values.append(b)
+    i+=1
+max_values_sorted=sorted(max_values,reverse=True)
+print(max_values_sorted[0])
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#Your task is to print an array of size X with its main diagonal elements as 's and 's everywhere else.
+
+import numpy
+n,m=input().split(' ')
+n=int(n)
+m=int(m)
+numpy.set_printoptions(legacy='1.13')
+print(numpy.eye(n,m,k=0))
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#Given the following matrix :
+            [1   1   0 ]
+      A =   [0   1   0 ]
+            [0   0   1 ]
+
+#We compute that : A100 =
+
+    [A B 0]
+    [0 C 0]
+    [0 D E]
+    
+#In the text box below, enter the values of the integers , , , ,  each in a new line. Do not leave any extra leading or trailing spaces.
+
+Answer :
+1
+100
+1
+0
+1
+
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+# Find a real valued "x" such that x^5 - x^4 + 2*x^3 - x^2 + x = 3. Print the result to 5 decimal places of accuracy. To verfiy your answer, you can use this 
+#solver at Wolfram Alpha:
+
+import math
+def function(x):
+    return (x**5 - x**4 + 2*(x**3) - x**2 + x -3)
+
+x_l=1
+x_u=1.8
+x=(x_l+x_u)/ 2
+while (abs(function(x))>0.00001):
+    #print(x_l,x_u)
+    
+    x=(x_l+x_u)/ 2
+    if function(x)>0:
+        x_u=x
+    else:
+        x_l=x
+    #print(function(x), x_l, x_u)
+        
+print(round(x_l,5))
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#Compute the area between curves x^3 and e^x for x in the range +0 and +4 Note that curves these intersect in this region. 
+#To plot them using Google Search, just type: "plot (e^x) and (x^3)"
+#This is a slightly tricky problem. Please try your best to sovle it. Be careful of silly mistakes. We will discuss the solution in live sessions.
+#There are no test cases for this problem as HackerRank doesnot allow matching of printed values in a rangeof numbers.
+
+
+import math 
+def func(x):
+    return (x**3) - (math.exp(x))
+
+x=0
+delta=0.1
+area=0
+while x<=4:
+    print(area,x)
+    area += func(x)*delta
+    x+= delta
+    
+print(area)
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+#Given a list of numbers, please implement these follwing metrics in Stats from scratch without using NumPy/SciPy/other libraries. 
+#Try and use simple loops/conditional statements/functions/sorting-algorithms to compute these metrics. Once you compute these metrics, 
+#compare them against the values obtained using standard libraries like NumPy/SciPy to see that your code is correct. 
+#There are no test cases for this problem. Following metrics need to be implemented from scratch:
+
+Mean
+Median
+Variance
+Std-dev
+IQR (Inter-Quartile Range)
+90th percentile
+99th percentile
+Median Absolute Deviation
+
+
+## Solution : 
+
+# generating n random numbers 
+import numpy as np
+import math
+from scipy import stats
+import pandas as pd
+numbers=np.random.random(100)
+
+## 1 - Mean 
+
+def mean(n):
+    print('\n## MEAN ##')
+    summ=0
+    for i in numbers:
+        summ+=i
+    mean = summ/len(n)
+    print('\nCalculated mean;',mean)
+    print('\nMean using numpy:',np.mean(numbers))
+
+mean(numbers)
+
+## 2 - #median 
+
+def median_numbers(n):
+    
+    print('\n## MEDIAN ##')
+    n_sorted=sorted(n)
+    median_index = float((len(n)+1)/2)
+    
+#     print('\nMedian Index:',median_index)
+    
+    if median_index%1 !=0:
+        low_index=int(math.floor(median_index))
+        upper_index=int(math.ceil(median_index))
+#         print('\nLower index:',low_index,'Upper index:', upper_index)
+        
+        calculated_median = (n_sorted[low_index]+n_sorted[upper_index])/2
+#         print('\nPrinting the values of median indexes: ',n_sorted[low_index],n_sorted[upper_index])
+        
+    else:
+        calculated_median = n_sorted[median_index]
+        
+    print('\ncalculated median:', calculated_median)
+    print('\nMedian using Numpy:',np.median(n))
+    
+    return calculated_median 
+
+med_calculated = median_numbers(numbers)
+
+def median(n):
+    
+#     print('\n## MEDIAN ##')
+    n_sorted=sorted(n)
+    median_index = float((len(n)+1)/2)
+    
+#     print('\nMedian Index:',median_index)
+    
+    if median_index%1 !=0:
+        low_index=int(math.floor(median_index))
+        upper_index=int(math.ceil(median_index))
+#         print('\nLower index:',low_index,'Upper index:', upper_index)
+        
+        calculated_median = (n_sorted[low_index]+n_sorted[upper_index])/2
+#         print('\nPrinting the values of median indexes: ',n_sorted[low_index],n_sorted[upper_index])
+        
+    else:
+        calculated_median = n_sorted[median_index]
+        
+#     print('\ncalculated median:', calculated_median)
+#     print('\nMedian using Numpy:',np.median(n))
+    
+    return calculated_median 
+
+med_calculated = median(numbers)
+
+## 3 : Variance
+
+def variance(n):
+    print('\n## STD DEVIATION & VARIANCE ##')
+    summ=0
+    for i in numbers:
+        summ+=i
+    mean=summ/len(n)
+
+    variance_n=[]
+    for i in n:
+        var_value=i-mean
+        variance_n.append(var_value**2)
+    std_dev = sum(variance_n)/len(n)**0.5
+    variance = sum(variance_n)/len(n)
+    
+    print('\nCalculated Std Deviation:',std_dev) 
+    print('\nCalculated variance:',variance)
+    print('\nStd using numpy:', np.std(n))
+    print('\nVar using numpy:', (np.std(n))**2)
+    
+    return std_dev, variance
+
+std_dev, variance = variance(numbers)
+
+## 5 : IQR
+
+def IQR(n):
+    
+    print('\n## INTER QUARTILE RANGE ##')
+    
+    n_sorted=sorted(n)
+
+    #finding the median
+    median_index= ((len(n)+1)/2)-1  
+#     print(median_index)
+
+    #finding the value on which the list would be divided in two parts
+    
+    index_breaker = int(math.floor(median_index))
+#     print(index_breaker)
+
+    first_half = n_sorted[:index_breaker-1]
+    second_half = n_sorted[index_breaker+1:]
+    median_first_half = median(first_half)
+    median_second_half = median(second_half)
+    Iqr = median_second_half - median_first_half
+#     print(median_first_half,median_second_half)
+    print('\nIQR :{}'.format(Iqr))
+    print('\nIQR using Numpy :',np.percentile(n,75)-np.percentile(n,25))   
+    
+IQR(numbers)
+
+## 6 : Median absolute deviation 
+
+def MAD(n):
+    
+    print('\n## MEDIAN ABSOLUTE DEVIATION ##')
+    
+#     print('\n Calculating Median inside MAD##')
+    
+    n_sorted=sorted(n)    
+    med_calculated = median(numbers)
+
+    #calculating median absolute deviation
+    median_deviation=[]
+    for i in n_sorted:
+        median_dev=abs(i-med_calculated) #using median calculated above 
+        median_deviation.append(median_dev)
+
+        #sorting these median values
+    median_deviations=sorted(median_deviation)
+    
+    calculated_median_dev = median(median_deviations)
+    
+    print('\nCalculated Median Absolute deviation:',calculated_median_dev)
+    print('\nMedian Abs Deviation using Scipy is:',pd.Series(n).mad()) #stats.median_abs_deviation(n, scale='normal'))
+
+MAD(numbers)
+
+##  90th percentile and ## 99th Percentile 
+
+def percentile(numbers, p_th):
+    
+    print('\n## PERCENTILES ##')
+    n_sorted = sorted(numbers)
+    perc = p_th/100
+#     print(perc)
+    k=len(numbers)*perc
+#     print(k)
+    if k%1 == 0:
+        percentile_nth = n_sorted[int(k)]
+    else: 
+        percentile_nth = (n_sorted[int(math.floor(k))] + n_sorted[int(math.ceil(k))])/2
+    print('\n{}Th percentile : {}'.format(p_th,percentile_nth))  
+    print('\n{}th Percentile using Numpy : {}'.format(p_th, np.percentile(numbers,p_th)))
+    
+percentile(numbers, 90)
+percentile(numbers, 99)
+          
+#////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
